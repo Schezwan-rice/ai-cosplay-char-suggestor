@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cosplay Character Suggester</title> <!-- Updated title -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="app-title">AI Cosplay Character Suggester</h1> <!-- Updated title -->
+
+        <div class="card">
+            <form id="prompt-form">
+                <label for="prompt">Describe your personality traits:</label> <!-- Updated label -->
+                <textarea id="prompt" name="prompt" rows="6"
+                    placeholder="Enter personality traits, quirks, values, strengths, weaknesses, etc..."></textarea>
+                <!-- Updated placeholder -->
+                <button type="submit" id="submit-btn">Suggest Characters</button> <!-- Updated button text -->
+
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-label">
+                        <span>Finding character matches...</span> <!-- Updated progress text -->
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <progress id="progress-bar" value="0" max="100"></progress>
+                </div>
+            </form>
+
+            <!-- Area for error messages -->
+            <p id="error-message" class="error-message"></p> <!-- Error message paragraph -->
+        </div>
+
+        <!-- New container for character results -->
+        <div id="character-results" class="results-grid">
+            <!-- Character cards will be dynamically added here by script.js -->
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

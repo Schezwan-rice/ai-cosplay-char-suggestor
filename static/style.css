@@ -1,0 +1,274 @@
+/* style.css */
+:root {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --accent-color: #bb86fc;
+  --error-color: #cf6679;
+  --button-hover: #9d4edd;
+  --input-bg: #2d2d2d;
+  --border-color: #333333;
+  /* --image-bg-bars variable removed */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.app-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--accent-color);
+  font-size: 2rem;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+#prompt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 120px;
+}
+
+textarea:focus {
+  outline: 2px solid var(--accent-color);
+  border-color: transparent;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: #000;
+  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  align-self: flex-start;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.progress-container {
+  margin-top: 1.5rem;
+  display: none; /* Hidden by default */
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+progress {
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: none; /* Remove default border */
+  background-color: var(--input-bg); /* Ensure background color for bar */
+}
+
+progress::-webkit-progress-bar {
+  background-color: var(--input-bg);
+  border-radius: 6px;
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--accent-color);
+  border-radius: 6px;
+  transition: width 0.3s ease; /* Smooth progress animation */
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--accent-color);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.error-message { /* Style for the error message paragraph */
+  color: var(--error-color);
+  margin-top: 1rem;
+  text-align: center;
+  min-height: 1.2em; /* Prevent layout shift when empty/filled */
+  font-weight: 500;
+}
+
+/* Styles for the results grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  display: none; /* Initially hidden, shown by JS */
+}
+
+/* Styles for individual character cards */
+.character-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden; /* Keep overflow hidden */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.character-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* --- START: New Image Container Styles for Blur Effect --- */
+.image-container {
+  position: relative; /* Context for absolute positioning */
+  width: 100%;
+  height: 240px; /* Set the fixed height HERE */
+  overflow: hidden; /* Clip the blurred background edges */
+  background-color: var(--card-bg); /* Fallback background color */
+  border-bottom: 1px solid var(--border-color); /* Optional separator */
+}
+
+.image-container img { /* Common styles for both images */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.image-bg { /* Blurred background image */
+  object-fit: cover; /* Stretch to cover the container */
+  filter: blur(8px); /* Apply blur - adjust value as needed */
+  transform: scale(1.1); /* Optional: Scale slightly to hide edge artifacts */
+  z-index: 1; /* Behind the foreground */
+}
+
+.image-fg { /* Visible foreground image */
+  object-fit: contain; /* Fit the image within the container */
+  z-index: 2; /* On top of the background */
+}
+/* --- END: New Image Container Styles --- */
+
+
+.character-card .character-name {
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-top: auto; /* Push name down */
+  word-wrap: break-word;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .card {
+      padding: 1.5rem;
+  }
+  .app-title {
+      font-size: 1.8rem;
+  }
+  button {
+      width: 100%;
+      padding: 0.9rem;
+  }
+  .results-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  /* Adjust container height in media queries */
+  .image-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+      padding: 1rem 0.5rem;
+  }
+  .container {
+      max-width: 100%;
+  }
+  .card {
+      padding: 1rem;
+      border-radius: 8px;
+  }
+  .app-title {
+      font-size: 1.5rem;
+  }
+  textarea {
+      min-height: 100px;
+  }
+  .results-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.8rem;
+  }
+  /* Adjust container height in media queries */
+  .image-container {
+    height: 180px;
+  }
+  .character-card .character-name {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+/* --- Chat Modal Styles Removed --- */
